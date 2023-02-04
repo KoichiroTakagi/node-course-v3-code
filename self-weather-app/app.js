@@ -1,12 +1,23 @@
-const geocode = require('./utils/geocode')
-const forecast = require('./utils/forecast')
+const yargs = require('yargs')
+const weather = require('./searchtemp')
 
-geocode('Boston', (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
+// Customize yargs version
+yargs.version('1.1.0')
+
+//  Create add command
+yargs.command({
+    command: '*',
+    describe: 'Get temperature to input location name',
+    builder: {
+        _: {
+            describe: 'location name',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: (argv) => {
+        weather.searchTemperature(argv._)
+    }
 })
 
-forecast(-75.7088, 44.1545, (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
-  })
+yargs.parse()
