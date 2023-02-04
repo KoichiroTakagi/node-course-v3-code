@@ -1,23 +1,23 @@
-const yargs = require('yargs')
-const weather = require('./searchtemp')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
-// Customize yargs version
-yargs.version('1.1.0')
+const address = process.argv[2]
 
-//  Create add command
-yargs.command({
-    command: '*',
-    describe: 'Get temperature to input location name',
-    builder: {
-        _: {
-            describe: 'location name',
-            demandOption: true,
-            type: 'string'
+if (!address) {
+    console.log("Please provide an address")
+} else {
+    geocode(address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return console.log(error)
         }
-    },
-    handler: (argv) => {
-        weather.searchTemperature(argv._)
-    }
-})
 
-yargs.parse()
+        forecast(latitude, longitude, (error, forecastData) => {
+            if(error) {
+                return console.log(error)
+            }
+
+            console.log(location)
+            console.log(forecastData)
+        })
+    })
+}
