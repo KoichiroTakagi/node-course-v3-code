@@ -41,15 +41,31 @@ app.get('/help', (req, res) => {
 
 
 app.get('/weather', (req, res) => {
-    res.send([{
-        forecast: 'It is cold.',
-        location: 'Japan'
-    }])
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide a address!!'
+        })
+    }
+    
+    res.send({
+        forecast: 'It is snowing',
+        location: 'Philadelphia',
+        address: req.query.address
+    })
 })
 
-// app.com
-// app.com/help
-// app.com/about
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        res.send({
+            error: 'You must provide a search term'
+        })
+    } 
+
+    console.log(req.query.query)
+    res.send({
+        products: []
+    })
+})
 
 app.get('/help/*', (req, res) => {
     res.render('404', {
