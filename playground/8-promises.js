@@ -14,7 +14,7 @@ const add = (a, b) => {
 //     }).catch((e) => {
 //         console.log(e)
 //     })
-// }).catch((e) => {   
+// }).catch((e) => {
 //     console.log(e)
 // })
 
