@@ -64,6 +64,34 @@ app.patch('/users/:id', async (req, res) => {
     }
 })
 
+app.delete('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id)
+
+        if (!user) {
+            return res.status(404).send()
+        }
+
+        res.send(user)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findByIdAndDelete(req.params.id)
+
+        if (!task) {
+            return res.status(404).send()
+        }
+
+        res.send(task)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 app.patch('/tasks/:id', async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
