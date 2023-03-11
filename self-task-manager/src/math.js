@@ -16,7 +16,7 @@ const add = (a, b) => {
             }
 
             resolve(a + b)
-        }, 2000)
+        }, 1)
     })
 }
 
